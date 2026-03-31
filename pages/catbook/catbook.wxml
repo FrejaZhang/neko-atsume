@@ -1,0 +1,97 @@
+<!-- pages/catbook/catbook.wxml -->
+<view class="catbook-page">
+
+  <!-- 顶部统计 -->
+  <view class="stats-bar">
+    <view class="stats-text">
+      <text class="stats-found">{{foundCount}}</text>
+      <text class="stats-sep"> / </text>
+      <text class="stats-total">{{totalCount}}</text>
+      <text class="stats-label"> 种猫咪已发现</text>
+    </view>
+    <view class="progress-wrap">
+      <view class="pixel-progress">
+        <view class="pixel-progress-bar" style="width:{{foundCount / totalCount * 100}}%"/>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选 Tab -->
+  <view class="tab-bar" style="margin:0 24rpx;">
+    <view class="tab-item {{filterTab === 'all' ? 'active' : ''}}"
+          bindtap="onTabChange" data-tab="all">全部</view>
+    <view class="tab-item {{filterTab === 'found' ? 'active' : ''}}"
+          bindtap="onTabChange" data-tab="found">已发现 {{foundCount}}</view>
+    <view class="tab-item {{filterTab === 'notfound' ? 'active' : ''}}"
+          bindtap="onTabChange" data-tab="notfound">未发现</view>
+  </view>
+
+  <!-- 猫咪卡片网格 -->
+  <scroll-view scroll-y class="catbook-grid-wrap">
+    <view class="catbook-grid">
+      <view wx:for="{{displayList}}" wx:key="id" wx:for-item="cat"
+            class="cat-card {{cat.found ? 'found' : 'mystery'}}"
+            bindtap="onCatTap" data-cat-id="{{cat.id}}">
+        <!-- 已发现：彩色图 -->
+        <view wx:if="{{cat.found}}" class="card-inner">
+          <view class="cat-avatar-wrap">
+            <image wx:if="{{cat.svgUri}}" src="{{cat.svgUri}}" mode="aspectFit" class="cat-avatar"/>
+            <text wx:else style="font-size:52rpx;">🐱</text>
+          </view>
+          <text class="cat-name">{{cat.name}}</text>
+          <text class="cat-visits">{{cat.visitCount}}次</text>
+          <view class="rarity-badge rarity-{{cat.rarity}}">{{cat.rarityLabel}}</view>
+        </view>
+        <!-- 未发现：问号剪影 -->
+        <view wx:else class="card-inner mystery-inner">
+          <view class="mystery-avatar">?</view>
+          <text class="cat-name mystery-name">???</text>
+          <text class="cat-visits">未发现</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{displayList.length === 0}}" class="empty-state">
+      <text>🐾 还没有符合条件的猫咪</text>
+      <text>快去后院放置食物吸引猫咪吧！</text>
+    </view>
+  </scroll-view>
+
+  <!-- 猫咪详情弹窗 -->
+  <view wx:if="{{showDetail && detailCat}}" class="modal-mask" bindtap="onCloseDetail">
+    <view class="modal-content detail-modal anim-pop-in" catchtap="">
+      <!-- 未发现 -->
+      <view wx:if="{{!detailRecord}}" class="mystery-detail">
+        <view class="modal-title">神秘猫咪</view>
+        <view class="mystery-big">?</view>
+        <text class="mystery-hint">继续在后院放置食物和道具，说不定能吸引到这只猫咪哦！</text>
+      </view>
+      <!-- 已发现 -->
+      <view wx:else>
+        <view class="modal-title">{{detailCat.name}}</view>
+        <view class="detail-avatar-wrap">
+          <image wx:if="{{detailCat.svgUri}}" src="{{detailCat.svgUri}}" mode="aspectFit" class="detail-avatar"/>
+          <text wx:else style="font-size:80rpx;display:block;text-align:center;">🐱</text>
+        </view>
+        <view class="detail-info-grid">
+          <view class="detail-tag rarity-{{detailCat.rarity}}">{{detailCat.rarityLabel}}</view>
+          <view class="detail-tag personality">{{detailCat.personality}}</view>
+        </view>
+        <view class="detail-stats">
+          <view class="stat-item">
+            <text class="stat-label">来访次数</text>
+            <text class="stat-val">{{detailRecord.visitCount}} 次</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-label">首次来访</text>
+            <text class="stat-val">{{detailRecord.firstVisit ? detailRecord.firstVisit.slice(0,10) : '--'}}</text>
+          </view>
+        </view>
+        <text class="detail-desc">{{detailCat.description}}</text>
+      </view>
+      <view class="pixel-btn" style="margin-top:30rpx;display:flex;justify-content:center;" bindtap="onCloseDetail">关闭</view>
+    </view>
+  </view>
+
+</view>

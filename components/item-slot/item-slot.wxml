@@ -1,0 +1,22 @@
+<!-- components/item-slot/item-slot.wxml -->
+<view class="slot-wrap {{selected ? 'selected' : ''}} {{isEmpty ? 'empty' : 'has-item'}}"
+      bindtap="onTap">
+  <!-- 道具图标 -->
+  <view class="item-area">
+    <image wx:if="{{itemSvgUri}}"
+           src="{{itemSvgUri}}"
+           mode="aspectFit"
+           class="item-icon"
+           lazy-load="{{false}}"/>
+    <view wx:elif="{{!isEmpty}}" class="item-emoji">📦</view>
+    <view wx:else class="empty-hint">+</view>
+  </view>
+
+  <!-- 猫咪（叠加在道具上方） -->
+  <view wx:if="{{cat}}" class="cat-overlay" catchtap="onCatTap">
+    <cat-sprite cat-id="{{cat.catId}}" size="{{52}}" animate="{{true}}" state="{{itemId ? 'eat' : 'sit'}}"/>
+  </view>
+
+  <!-- 选中高亮框 -->
+  <view wx:if="{{selected}}" class="select-ring"/>
+</view>

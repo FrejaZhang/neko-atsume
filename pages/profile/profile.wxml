@@ -1,0 +1,70 @@
+<!-- pages/profile/profile.wxml -->
+<view class="profile-page">
+
+  <!-- 头像区 -->
+  <view class="profile-header">
+    <view class="avatar-wrap">
+      <image wx:if="{{userInfo && userInfo.avatarUrl}}"
+             src="{{userInfo.avatarUrl}}"
+             mode="aspectFill"
+             class="avatar"/>
+      <view wx:else class="avatar-placeholder">🐱</view>
+      <view class="avatar-deco"/>
+    </view>
+    <view class="user-info">
+      <text class="nickname">{{userInfo ? userInfo.nickName : '猫咪后院玩家'}}</text>
+      <text class="play-days">游玩 {{stats.daysPlayed}} 天</text>
+    </view>
+  </view>
+
+  <!-- 货币展示 -->
+  <view class="currency-banner">
+    <view class="currency-block">
+      <text class="c-icon">🐟</text>
+      <text class="c-num">{{fishCount}}</text>
+      <text class="c-label">普通鱼干</text>
+    </view>
+    <view class="c-divider"/>
+    <view class="currency-block">
+      <text class="c-icon">🌟</text>
+      <text class="c-num">{{goldFishCount}}</text>
+      <text class="c-label">金鱼干</text>
+    </view>
+  </view>
+
+  <!-- 统计数据 -->
+  <view class="section-title">📊 我的数据</view>
+  <view class="stats-grid">
+    <view class="stat-card">
+      <text class="stat-big">{{stats.foundCount}}</text>
+      <text class="stat-small">已发现猫种</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-big">{{stats.totalCatVisits}}</text>
+      <text class="stat-small">累计来访次</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-big">{{stats.totalFishEarned}}</text>
+      <text class="stat-small">累计获得🐟</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-big">{{stats.goldFishEarned}}</text>
+      <text class="stat-small">获得金鱼干🌟</text>
+    </view>
+  </view>
+
+  <!-- 成就展示 -->
+  <view class="section-title">🏆 成就</view>
+  <view class="achievements-list">
+    <view wx:for="{{achievements}}" wx:key="id" wx:for-item="ach"
+          class="ach-item {{ach.unlocked ? 'unlocked' : 'locked'}}">
+      <text class="ach-icon">{{ach.unlocked ? ach.icon : '🔒'}}</text>
+      <view class="ach-info">
+        <text class="ach-name">{{ach.name}}</text>
+        <text class="ach-desc">{{ach.desc}}</text>
+      </view>
+      <view wx:if="{{ach.unlocked}}" class="ach-badge">✓</view>
+    </view>
+  </view>
+
+</view>

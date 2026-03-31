@@ -1,0 +1,75 @@
+/* components/item-slot/item-slot.wxss */
+.slot-wrap {
+  position: relative;
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 16rpx;
+  background: rgba(255, 255, 255, 0.5);
+  border: 4rpx solid rgba(200, 168, 120, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 2rpx 4rpx 8rpx rgba(0,0,0,0.08);
+}
+
+.slot-wrap.selected {
+  border-color: #E8935A;
+  background: rgba(232, 147, 90, 0.1);
+  transform: scale(1.05);
+}
+
+.slot-wrap:active {
+  transform: scale(0.96);
+}
+
+.item-area {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-icon {
+  width: 70rpx;
+  height: 70rpx;
+  image-rendering: pixelated;
+}
+
+.item-emoji {
+  font-size: 48rpx;
+}
+
+.empty-hint {
+  font-size: 44rpx;
+  color: #C8A878;
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+/* 猫咪叠加在道具上方 */
+.cat-overlay {
+  position: absolute;
+  top: -52rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: auto;
+  filter: drop-shadow(0 4rpx 8rpx rgba(0,0,0,0.15));
+}
+
+/* 选中高亮框 */
+.select-ring {
+  position: absolute;
+  inset: -4rpx;
+  border-radius: 18rpx;
+  border: 4rpx solid #E8935A;
+  animation: ring-pulse 1s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ring-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}

@@ -1,0 +1,144 @@
+<!-- pages/yard/yard.wxml -->
+<view class="yard-page">
+
+  <!-- ===== 顶部 HUD ===== -->
+  <view class="hud-bar">
+    <fish-counter
+      fish-count="{{fishCount}}"
+      gold-fish-count="{{goldFishCount}}"
+      pending-fish="{{pendingFish}}"/>
+    <!-- 刷新倒计时 -->
+    <view class="refresh-timer {{isRefreshing ? 'spinning' : ''}}" bindtap="onManualRefresh">
+      <text class="timer-icon">⟳</text>
+      <text class="timer-num">{{isRefreshing ? '...' : refreshCountdown + 's'}}</text>
+    </view>
+    <!-- 场景切换 -->
+    <view class="scene-switch" bindtap="onSceneSwitch">
+      <text class="scene-icon">{{currentScene === 'yard' ? '🏡' : '🏠'}}</text>
+      <text class="scene-label">{{sceneName}}</text>
+    </view>
+  </view>
+
+  <!-- ===== 场景背景 ===== -->
+  <view class="scene-bg {{currentScene}}">
+    <!-- 后院：天空+草地+篱笆 -->
+    <view wx:if="{{currentScene === 'yard'}}" class="yard-bg">
+      <view class="sky">
+        <view class="cloud cloud1">☁️</view>
+        <view class="cloud cloud2">☁️</view>
+        <view class="sun">☀️</view>
+      </view>
+      <view class="grass-area">
+        <!-- 道具槽位网格 3×2，slotsData 由 JS 构建，含 cat 信息 -->
+        <view class="slots-grid">
+          <block wx:for="{{slotsData}}" wx:key="slotIndex" wx:for-item="sd">
+            <item-slot
+              slot-index="{{sd.slotIndex}}"
+              item-id="{{sd.itemId}}"
+              cat="{{sd.cat}}"
+              selected="{{selectedSlot === sd.slotIndex}}"
+              is-empty="{{!sd.itemId}}"
+              bind:slottap="onSlotTap"
+              bind:cattap="onCatTap"/>
+          </block>
+        </view>
+      </view>
+      <view class="fence"/>
+    </view>
+
+    <!-- 室内：地板+墙壁 -->
+    <view wx:else class="indoor-bg">
+      <view class="wall">
+        <view class="wall-decoration">🖼️</view>
+      </view>
+      <view class="floor-area">
+        <view class="slots-grid">
+          <block wx:for="{{slotsData}}" wx:key="slotIndex" wx:for-item="sd">
+            <item-slot
+              slot-index="{{sd.slotIndex}}"
+              item-id="{{sd.itemId}}"
+              cat="{{sd.cat}}"
+              selected="{{selectedSlot === sd.slotIndex}}"
+              is-empty="{{!sd.itemId}}"
+              bind:slottap="onSlotTap"
+              bind:cattap="onCatTap"/>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 底部操作栏 ===== -->
+  <view class="bottom-bar">
+    <!-- 收取鱼干按钮 -->
+    <view class="collect-btn {{hasPendingFish ? 'active anim-blink' : 'inactive'}}"
+          bindtap="onCollectFish">
+      <text class="btn-icon">🐟</text>
+      <text class="btn-label">{{hasPendingFish ? '收取 +' + pendingFish : '等待中...'}}</text>
+    </view>
+    <!-- 背包按钮 -->
+    <view class="bag-btn" bindtap="onOpenBag">
+      <text class="btn-icon">🎒</text>
+      <text class="btn-label">背包</text>
+    </view>
+  </view>
+
+  <!-- ===== 背包面板（半屏弹出） ===== -->
+  <view wx:if="{{showBagPanel}}" class="panel-mask" bindtap="onCloseBag">
+    <view class="bag-panel anim-pop-in" catchtap="">
+      <view class="panel-header">
+        <text class="panel-title">🎒 选择道具</text>
+        <text wx:if="{{selectedSlot >= 0}}" class="slot-hint">放入槽位 {{selectedSlot + 1}}</text>
+        <view class="close-btn" bindtap="onCloseBag">✕</view>
+      </view>
+      <scroll-view scroll-y class="bag-list">
+        <view wx:if="{{bagItemList.length === 0}}" class="empty-state">
+          <text>背包空空如也~</text>
+          <text>去商店购买道具吧！</text>
+        </view>
+        <view wx:for="{{bagItemList}}" wx:key="id" wx:for-item="bagItem"
+              class="bag-item-row {{bagItem.count <= 0 ? 'disabled' : ''}}"
+              bindtap="onSelectItem" data-item-id="{{bagItem.id}}">
+          <view class="bag-item-icon">
+            <text style="font-size:40rpx;">
+              {{bagItem.type === 'food' ? '🍚' : '🧸'}}
+            </text>
+          </view>
+          <view class="bag-item-info">
+            <text class="bag-item-name">{{bagItem.name}}</text>
+            <text class="bag-item-desc">{{bagItem.description}}</text>
+          </view>
+          <view class="bag-item-count">×{{bagItem.count}}</view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- ===== 猫咪详情弹窗 ===== -->
+  <view wx:if="{{showCatDetail && detailCat}}" class="modal-mask" bindtap="onCloseCatDetail">
+    <view class="modal-content cat-detail-modal anim-pop-in" catchtap="">
+      <view class="modal-title">{{detailCat.name}}</view>
+      <view class="cat-detail-sprite">
+        <cat-sprite cat-id="{{detailCat.id}}" size="{{80}}" animate="{{true}}"/>
+      </view>
+      <view class="cat-detail-info">
+        <view class="info-row">
+          <text class="info-label">性格</text>
+          <text class="info-value">{{detailCat.personality}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">稀有度</text>
+          <text class="info-value rarity-{{detailCat.rarity}}">
+            {{detailCat.rarity === 'common' ? '普通' : detailCat.rarity === 'uncommon' ? '少见' : detailCat.rarity === 'rare' ? '稀有' : '特殊'}}
+          </text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">简介</text>
+          <text class="info-value desc">{{detailCat.description}}</text>
+        </view>
+      </view>
+      <view class="pixel-btn" style="margin-top:30rpx;width:100%;justify-content:center;" bindtap="onCloseCatDetail">好的！</view>
+    </view>
+  </view>
+
+</view>

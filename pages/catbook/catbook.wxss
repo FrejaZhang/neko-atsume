@@ -1,0 +1,245 @@
+/* pages/catbook/catbook.wxss */
+.catbook-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--color-bg);
+}
+
+.stats-bar {
+  padding: 20rpx 30rpx 10rpx;
+  background: linear-gradient(135deg, #FFF3E0, #FFECB3);
+  border-bottom: 4rpx solid var(--color-bg-warm);
+}
+
+.stats-text {
+  margin-bottom: 12rpx;
+}
+
+.stats-found {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: 'Courier New', monospace;
+}
+
+.stats-sep, .stats-total, .stats-label {
+  font-size: 26rpx;
+  color: var(--color-text-mid);
+}
+
+.stats-total {
+  font-weight: 600;
+}
+
+.progress-wrap {
+  margin-top: 8rpx;
+}
+
+.catbook-grid-wrap {
+  flex: 1;
+  padding: 20rpx 20rpx 0;
+}
+
+.catbook-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+  padding-bottom: 30rpx;
+}
+
+/* 猫咪卡片 */
+.cat-card {
+  border-radius: 16rpx;
+  overflow: hidden;
+  border: 4rpx solid var(--color-bg-warm);
+  transition: all 0.2s;
+  background: white;
+}
+
+.cat-card:active {
+  transform: scale(0.95);
+}
+
+.cat-card.found {
+  box-shadow: 4rpx 4rpx 0 var(--color-bg-warm);
+}
+
+.cat-card.mystery {
+  background: #F5F5F5;
+  border-color: #E0E0E0;
+  box-shadow: none;
+}
+
+.card-inner {
+  padding: 16rpx 10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.cat-avatar-wrap {
+  width: 70rpx;
+  height: 70rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cat-avatar {
+  width: 70rpx;
+  height: 70rpx;
+  image-rendering: pixelated;
+}
+
+.cat-name {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.mystery-name {
+  color: #9E9E9E;
+}
+
+.cat-visits {
+  font-size: 20rpx;
+  color: var(--color-text-mid);
+}
+
+.rarity-badge {
+  font-size: 18rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 8rpx;
+  font-weight: 600;
+}
+
+.rarity-common { background: #E8F5E9; color: #388E3C; }
+.rarity-uncommon { background: #E3F2FD; color: #1976D2; }
+.rarity-rare { background: #FFF3E0; color: #E65100; }
+.rarity-special { background: #FFFDE7; color: #F57F17; }
+
+/* 未发现 */
+.mystery-inner {
+  opacity: 0.7;
+}
+
+.mystery-avatar {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
+  background: #E0E0E0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #9E9E9E;
+}
+
+/* ===== 详情弹窗 ===== */
+.detail-modal {
+  max-width: 580rpx;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.detail-avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 20rpx 0;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #FFF9C4, #FFF3E0);
+  border-radius: 16rpx;
+}
+
+.detail-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  image-rendering: pixelated;
+}
+
+.detail-info-grid {
+  display: flex;
+  gap: 12rpx;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+
+.detail-tag {
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 10rpx;
+  font-weight: 600;
+}
+
+.detail-tag.personality {
+  background: #F3E5F5;
+  color: #7B1FA2;
+}
+
+.detail-stats {
+  display: flex;
+  gap: 0;
+  border: 3rpx solid var(--color-bg-warm);
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx;
+  background: white;
+}
+
+.stat-item:not(:last-child) {
+  border-right: 3rpx solid var(--color-bg-warm);
+}
+
+.stat-label {
+  display: block;
+  font-size: 20rpx;
+  color: var(--color-text-mid);
+  margin-bottom: 6rpx;
+}
+
+.stat-val {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  font-family: 'Courier New', monospace;
+}
+
+.detail-desc {
+  display: block;
+  font-size: 24rpx;
+  color: var(--color-text-mid);
+  line-height: 1.6;
+  text-align: center;
+  padding: 0 10rpx;
+}
+
+.mystery-detail {
+  text-align: center;
+}
+
+.mystery-big {
+  font-size: 100rpx;
+  color: #BDBDBD;
+  text-align: center;
+  margin: 20rpx 0;
+}
+
+.mystery-hint {
+  display: block;
+  font-size: 24rpx;
+  color: var(--color-text-mid);
+  line-height: 1.6;
+  padding: 0 10rpx;
+}

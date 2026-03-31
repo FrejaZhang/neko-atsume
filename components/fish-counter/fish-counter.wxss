@@ -1,0 +1,57 @@
+/* components/fish-counter/fish-counter.wxss */
+.fish-hud {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  position: relative;
+}
+
+.fish-item {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  background: rgba(255,255,255,0.85);
+  border-radius: 20rpx;
+  padding: 8rpx 18rpx;
+  border: 3rpx solid #E8D5B0;
+  box-shadow: 2rpx 2rpx 0 #E8D5B0;
+}
+
+.fish-item.gold {
+  border-color: #F5C842;
+  box-shadow: 2rpx 2rpx 0 #C8A000;
+}
+
+.fish-emoji {
+  font-size: 28rpx;
+}
+
+.fish-num {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #3E2723;
+  font-family: 'Courier New', monospace;
+  min-width: 40rpx;
+}
+
+.pending-badge {
+  position: absolute;
+  top: -20rpx;
+  right: -10rpx;
+  background: #EF5350;
+  color: white;
+  font-size: 20rpx;
+  font-weight: 700;
+  padding: 4rpx 10rpx;
+  border-radius: 10rpx;
+  border: 2rpx solid #C62828;
+}
+
+@keyframes blink-highlight {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.anim-blink {
+  animation: blink-highlight 1s ease-in-out infinite;
+}

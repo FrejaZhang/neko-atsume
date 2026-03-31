@@ -1,0 +1,93 @@
+<!-- pages/shop/shop.wxml -->
+<view class="shop-page">
+
+  <!-- 顶部货币显示 -->
+  <view class="shop-header">
+    <text class="shop-title">🏪 商店</text>
+    <view class="currency-bar">
+      <view class="currency-item">
+        <text>🐟 </text>
+        <text class="currency-num">{{fishCount}}</text>
+      </view>
+      <view class="currency-item gold">
+        <text>🌟 </text>
+        <text class="currency-num">{{goldFishCount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分类 Tab -->
+  <view class="tab-bar" style="margin:0 24rpx 10rpx;">
+    <view class="tab-item {{activeTab === 'food' ? 'active' : ''}}"
+          bindtap="onTabChange" data-tab="food">🍚 食物</view>
+    <view class="tab-item {{activeTab === 'goods' ? 'active' : ''}}"
+          bindtap="onTabChange" data-tab="goods">🧸 道具</view>
+  </view>
+
+  <!-- 商品列表 -->
+  <scroll-view scroll-y class="shop-list">
+    <view wx:if="{{displayItems.length === 0}}" class="empty-state">
+      <text>暂无商品</text>
+    </view>
+    <view wx:for="{{displayItems}}" wx:key="id" wx:for-item="item" class="shop-item-row">
+      <!-- 道具图标 -->
+      <view class="shop-icon-wrap">
+        <image wx:if="{{item.svgUri}}" src="{{item.svgUri}}" mode="aspectFit" class="shop-icon"/>
+        <text wx:else style="font-size:48rpx;">{{item.type === 'food' ? '🍚' : '🧸'}}</text>
+      </view>
+      <!-- 道具信息 -->
+      <view class="shop-item-info">
+        <view class="item-name-row">
+          <text class="shop-item-name">{{item.name}}</text>
+          <view wx:if="{{item.owned}}" class="owned-badge">已有×{{item.ownedCount}}</view>
+        </view>
+        <text class="shop-item-desc">{{item.description}}</text>
+        <view class="attract-bar">
+          <text class="attract-label">吸引力 </text>
+          <view class="attract-dots">
+            <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this"
+                  class="dot {{item.attractWeight >= index * 6 ? 'filled' : ''}}"/>
+          </view>
+        </view>
+      </view>
+      <!-- 价格和购买 -->
+      <view class="shop-buy-area">
+        <view class="price-tag">
+          <text>🐟 </text>
+          <text class="price-num">{{item.price}}</text>
+        </view>
+        <view class="pixel-btn {{!item.canAfford ? 'disabled' : ''}}"
+              bindtap="onBuyTap" data-item-id="{{item.id}}"
+              style="font-size:22rpx;padding:10rpx 20rpx;">
+          购买
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 购买确认弹窗 -->
+  <view wx:if="{{showConfirm && confirmItem}}" class="modal-mask" bindtap="onCancelBuy">
+    <view class="modal-content confirm-modal anim-pop-in" catchtap="">
+      <view class="modal-title">确认购买</view>
+      <view class="confirm-item-preview">
+        <image wx:if="{{confirmItem.svgUri}}" src="{{confirmItem.svgUri}}" mode="aspectFit"
+               style="width:80rpx;height:80rpx;"/>
+        <view class="confirm-item-detail">
+          <text class="confirm-name">{{confirmItem.name}}</text>
+          <text class="confirm-price">🐟 {{confirmItem.price}} 普通鱼干</text>
+        </view>
+      </view>
+      <view class="confirm-balance">
+        <text>当前余额：🐟 {{fishCount}}</text>
+        <text class="balance-after"> → 🐟 {{fishCount - confirmItem.price}}</text>
+      </view>
+      <view class="confirm-btns">
+        <view class="pixel-btn" style="background:#E0E0E0;border-color:#BDBDBD;color:#616161;box-shadow:0 4rpx 0 #BDBDBD;flex:1;"
+              bindtap="onCancelBuy">取消</view>
+        <view class="pixel-btn {{fishCount < confirmItem.price ? 'disabled' : ''}}"
+              style="flex:1;" bindtap="onConfirmBuy">确认购买</view>
+      </view>
+    </view>
+  </view>
+
+</view>

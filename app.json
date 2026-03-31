@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/yard/yard",
+    "pages/catbook/catbook",
+    "pages/shop/shop",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#3E2723",
+    "navigationBarTitleText": "猫咪后院",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FDF6E3"
+  },
+  "tabBar": {
+    "color": "#9E9E9E",
+    "selectedColor": "#E8935A",
+    "backgroundColor": "#FDF6E3",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/yard/yard",
+        "text": "后院",
+        "iconPath": "assets/icons/yard.png",
+        "selectedIconPath": "assets/icons/yard-active.png"
+      },
+      {
+        "pagePath": "pages/catbook/catbook",
+        "text": "图鉴",
+        "iconPath": "assets/icons/catbook.png",
+        "selectedIconPath": "assets/icons/catbook-active.png"
+      },
+      {
+        "pagePath": "pages/shop/shop",
+        "text": "商店",
+        "iconPath": "assets/icons/shop.png",
+        "selectedIconPath": "assets/icons/shop-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/icons/profile.png",
+        "selectedIconPath": "assets/icons/profile-active.png"
+      }
+    ]
+  },
+  "cloud": true,
+  "sitemapLocation": "sitemap.json"
+}

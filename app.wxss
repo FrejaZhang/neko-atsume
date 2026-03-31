@@ -1,0 +1,217 @@
+/* app.wxss - 全局样式 */
+
+/* ===== CSS 变量 ===== */
+page {
+  --color-primary: #E8935A;
+  --color-primary-dark: #D4714A;
+  --color-gold: #F5C842;
+  --color-bg: #FDF6E3;
+  --color-bg-warm: #E8D5B0;
+  --color-bg-green: #C8E6C9;
+  --color-text-dark: #3E2723;
+  --color-text-mid: #6D4C41;
+  --color-text-light: #FFFFFF;
+  --color-success: #66BB6A;
+  --color-danger: #EF5350;
+  --color-warn: #FFD54F;
+  --color-info: #90CAF9;
+
+  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--color-bg);
+  color: var(--color-text-dark);
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+/* ===== 重置 ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== 像素风格通用组件 ===== */
+
+/* 像素按钮 */
+.pixel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 28rpx;
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  font-weight: 700;
+  border: 4rpx solid var(--color-primary-dark);
+  box-shadow: 0 4rpx 0 var(--color-primary-dark);
+  transition: all 0.1s;
+  letter-spacing: 2rpx;
+}
+
+.pixel-btn:active {
+  box-shadow: 0 2rpx 0 var(--color-primary-dark);
+  transform: translateY(2rpx);
+}
+
+.pixel-btn.gold {
+  background: var(--color-gold);
+  border-color: #C8A000;
+  box-shadow: 0 4rpx 0 #C8A000;
+  color: var(--color-text-dark);
+}
+
+.pixel-btn.disabled {
+  background: #BDBDBD;
+  border-color: #9E9E9E;
+  box-shadow: 0 4rpx 0 #9E9E9E;
+  color: #757575;
+}
+
+/* 像素卡片 */
+.pixel-card {
+  background: #FFFDF5;
+  border-radius: 12rpx;
+  border: 4rpx solid var(--color-bg-warm);
+  box-shadow: 4rpx 4rpx 0 var(--color-bg-warm);
+  padding: 20rpx;
+}
+
+/* 像素弹窗遮罩 */
+.modal-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(62, 39, 35, 0.6);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 弹窗内容区 */
+.modal-content {
+  background: var(--color-bg);
+  border-radius: 16rpx;
+  border: 6rpx solid var(--color-bg-warm);
+  box-shadow: 8rpx 8rpx 0 var(--color-bg-warm);
+  padding: 40rpx;
+  width: 600rpx;
+  max-height: 80vh;
+}
+
+/* 弹窗标题 */
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  text-align: center;
+  margin-bottom: 30rpx;
+  letter-spacing: 4rpx;
+}
+
+/* 鱼干图标 */
+.fish-icon {
+  width: 36rpx;
+  height: 36rpx;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4rpx;
+}
+
+/* 分割线 */
+.divider {
+  height: 4rpx;
+  background: var(--color-bg-warm);
+  border-radius: 2rpx;
+  margin: 20rpx 0;
+}
+
+/* Tab 切换栏 */
+.tab-bar {
+  display: flex;
+  background: var(--color-bg-warm);
+  border-radius: 20rpx;
+  padding: 6rpx;
+  margin: 20rpx 0;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 14rpx 0;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--color-text-mid);
+  transition: all 0.2s;
+}
+
+.tab-item.active {
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  box-shadow: 0 2rpx 8rpx rgba(232, 147, 90, 0.4);
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 40rpx;
+  color: var(--color-text-mid);
+}
+
+.empty-state text {
+  font-size: 26rpx;
+  margin-top: 20rpx;
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* 像素进度条 */
+.pixel-progress {
+  height: 20rpx;
+  background: var(--color-bg-warm);
+  border-radius: 10rpx;
+  border: 2rpx solid #C8A878;
+  overflow: hidden;
+}
+
+.pixel-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-gold));
+  border-radius: 10rpx;
+  transition: width 0.5s ease;
+}
+
+/* 动画：弹入 */
+@keyframes pop-in {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.anim-pop-in {
+  animation: pop-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 动画：浮动 */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8rpx); }
+}
+
+.anim-float {
+  animation: float 2s ease-in-out infinite;
+}
+
+/* 动画：闪烁高亮 */
+@keyframes blink-highlight {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.anim-blink {
+  animation: blink-highlight 1s ease-in-out infinite;
+}

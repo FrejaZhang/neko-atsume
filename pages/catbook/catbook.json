@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "猫咪图鉴",
+  "usingComponents": {
+    "cat-sprite": "/components/cat-sprite/cat-sprite"
+  }
+}

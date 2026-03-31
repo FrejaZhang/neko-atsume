@@ -1,0 +1,11 @@
+<!-- components/cat-sprite/cat-sprite.wxml -->
+<view class="cat-sprite {{animate ? 'anim-float' : ''}} {{isEating ? 'eating' : ''}}"
+      style="width:{{size}}px;height:{{size}}px;">
+  <image wx:if="{{svgUri}}"
+         src="{{svgUri}}"
+         mode="aspectFit"
+         style="width:100%;height:100%;"
+         lazy-load="{{false}}"/>
+  <!-- 未加载时显示默认像素猫 -->
+  <view wx:else class="default-cat" style="font-size:{{size * 0.8}}px;">🐱</view>
+</view>

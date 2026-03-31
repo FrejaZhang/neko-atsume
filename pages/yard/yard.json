@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "猫咪后院",
+  "usingComponents": {
+    "cat-sprite": "/components/cat-sprite/cat-sprite",
+    "item-slot": "/components/item-slot/item-slot",
+    "fish-counter": "/components/fish-counter/fish-counter"
+  }
+}

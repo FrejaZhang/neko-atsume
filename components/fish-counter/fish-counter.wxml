@@ -1,0 +1,15 @@
+<!-- components/fish-counter/fish-counter.wxml -->
+<view class="fish-hud">
+  <view class="fish-item">
+    <text class="fish-emoji">🐟</text>
+    <text class="fish-num">{{displayFish}}</text>
+  </view>
+  <view class="fish-item gold">
+    <text class="fish-emoji">🌟</text>
+    <text class="fish-num">{{displayGold}}</text>
+  </view>
+  <!-- 待收鱼干提示 -->
+  <view wx:if="{{showPending}}" class="pending-badge anim-blink">
+    <text>+{{pendingFish}}</text>
+  </view>
+</view>
